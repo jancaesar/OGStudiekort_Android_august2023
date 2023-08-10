@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Baggrundsbillede -->
+
+    <!-- Logo placeret øverst i midten -->
+    <ImageView
+        android:id="@+id/backgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ranke" />
+
+    <ImageView
+        android:id="@+id/topLogo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/oglogo_transparent_foreground" />
+
+    <!-- Overskrift -->
+    <TextView
+        android:id="@+id/tvTopUpTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topLogo"
+        android:layout_centerHorizontal="true"
+        android:text="Tank dit studiekort"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:layout_marginTop="16dp" />
+
+    <!-- Knapper for forudbestemte beløb -->
+    <LinearLayout
+        android:id="@+id/amountButtonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvTopUpTitle"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:gravity="center">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn100dkk"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="100 DKK"
+            app:cornerRadius="8dp"
+            app:backgroundTint="@color/colorPrimary"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn200dkk"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="200 DKK"
+            app:cornerRadius="8dp"
+            app:backgroundTint="@color/colorPrimary"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn300dkk"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="300 DKK"
+            app:cornerRadius="8dp"
+            app:backgroundTint="@color/colorPrimary"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <!-- Fritekstfelt -->
+    <EditText
+        android:id="@+id/etAmount"
+        android:layout_width="192dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/amountButtonsLayout"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/edit_text_background"
+        android:layout_centerHorizontal="true"
+        android:hint="Beløb"
+        android:inputType="numberDecimal"
+        android:padding="12dp"
+        app:cornerRadius="8dp" />
+
+    <!-- Tank op knap -->
+    <Button
+        android:id="@+id/btnTopUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etAmount"
+        android:layout_centerHorizontal="true"
+        android:text="Tank op"
+        app:cornerRadius="8dp"
+        app:backgroundTint="@color/colorAccent"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp" />
+
+    <!-- Tilbage knap -->
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnTopUp"
+        android:layout_centerHorizontal="true"
+        android:text="Tilbage"
+        app:cornerRadius="8dp"
+        app:backgroundTint="@color/colorPrimaryDark"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp" />
+
+    <!-- Tekstboks nederst på siden -->
+    <TextView
+        android:id="@+id/tvReceiptInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="Kvitteringer for tidligere optankninger findes på pay.ordrup-gym.dk"
+        android:textSize="16sp" />
+
+</RelativeLayout>
