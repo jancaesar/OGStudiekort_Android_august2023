@@ -20,6 +20,7 @@ class LoginActivity : AppCompatActivity() {
 
     lateinit var biometricLoginHelper: BiometricLoginHelper
 
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

@@ -9,11 +9,11 @@ android {
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.ogstudiekort"
+        applicationId = "com.ogstudiekortapp"
         minSdk = 26
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 4
+        versionName = "1.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
