@@ -2,9 +2,12 @@ package com.ogstudiekort
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -96,4 +99,36 @@ class BiometricLoginHelper(private val context: Context) {
         val encryptedPassword = sharedPreferences.getString("encryptedPassword", null)
         return encryptedUsername != null && encryptedPassword != null
     }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    fun authenticateUserWithBiometric(success: () -> Unit, failure: () -> Unit) {
+        val promptInfo = androidx.biometric.BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Biometrisk Login")
+            .setSubtitle("Log ind med dine biometriske data")
+            .setNegativeButtonText("Annuller")
+            .build()
+
+        val biometricPrompt = androidx.biometric.BiometricPrompt(
+            context as AppCompatActivity,  // Cast context til AppCompatActivity
+            context.mainExecutor,
+            object : androidx.biometric.BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    failure.invoke()
+                }
+
+                override fun onAuthenticationSucceeded(result: androidx.biometric.BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    success.invoke()
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    failure.invoke()
+                }
+            })
+
+        biometricPrompt.authenticate(promptInfo)
+    }
+
 }

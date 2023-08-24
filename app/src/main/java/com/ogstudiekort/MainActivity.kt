@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         // Schedule automatic logout after 5 minutes of inactivity.
-        logoutHandler.postDelayed(logoutRunnable, 300000) // 300000 ms = 5 minutes
+        logoutHandler.postDelayed(logoutRunnable, 300000) // 5*60*1000 = 300000 ms = 5 minutes
     }
 
     override fun onUserInteraction() {
@@ -133,6 +133,7 @@ class MainActivity : AppCompatActivity() {
 
         val logoutButton: Button = findViewById(R.id.logout_button)
         logoutButton.setOnClickListener {
+            logoutHandler.removeCallbacks(logoutRunnable)
             resetUserData()
             val intent = Intent(this@MainActivity, LoginActivity::class.java)
             startActivity(intent)

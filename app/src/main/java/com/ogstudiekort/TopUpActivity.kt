@@ -39,12 +39,11 @@ class TopUpActivity : AppCompatActivity() {
         btnTopUp.setOnClickListener {
             val amount = etAmount.text.toString().toDoubleOrNull()
             if (amount != null) {
-                if (amount >= 1 && (amount + currentBalance) <= 1000) {
+                if (amount >= 100 && (amount + currentBalance) <= 1000) {
 
-                    // Indkod fullname
-                    val encodedFullname = URLEncoder.encode(fullname, "UTF-8") // Erstat 'fullname' med den faktiske værdi.
+                    val encodedFullname = URLEncoder.encode(fullname, "UTF-8") // Replace fullname with actual value
 
-                    // Udfør anmodningen
+                    // Execute the request
                     val call = PaymentRetrofitClient.instance.initiatePayment(username, encodedFullname, amount)
                     call.enqueue(object: retrofit2.Callback<String> {
                         override fun onResponse(call: Call<String>, response: retrofit2.Response<String>) {

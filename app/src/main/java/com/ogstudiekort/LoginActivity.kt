@@ -1,6 +1,7 @@
 package com.ogstudiekort
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,17 +40,31 @@ class LoginActivity : AppCompatActivity() {
         if (biometricLoginHelper.isBiometricAvailable() && biometricLoginHelper.isUserDataSaved()) {
             biometricLoginButton.visibility = View.VISIBLE
             biometricLoginButton.setOnClickListener {
-                val userData = biometricLoginHelper.retrieveUserDataFromPreferences()
-                if (userData != null) {
-                    val (username, password) = userData
-                    authenticateUser(username, password)
-                } else {
-                    Toast.makeText(this, "Kunne ikke hente brugeroplysninger", Toast.LENGTH_SHORT).show()
+                validateBiometricLogin {
+                    val userData = biometricLoginHelper.retrieveUserDataFromPreferences()
+                    if (userData != null) {
+                        val (username, password) = userData
+                        authenticateUser(username, password)
+                    } else {
+                        Toast.makeText(this, "Kunne ikke hente brugeroplysninger", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         } else {
             biometricLoginButton.visibility = View.GONE
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.P)
+    private fun validateBiometricLogin(successCallback: () -> Unit) {
+        biometricLoginHelper.authenticateUserWithBiometric(
+            success = {
+                successCallback.invoke()
+            },
+            failure = {
+                Toast.makeText(this, "Biometrisk validering mislykkedes", Toast.LENGTH_SHORT).show()
+            }
+        )
     }
 
     private fun authenticateUser(username: String, password: String) {
@@ -72,14 +88,14 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this@LoginActivity, "Forkert brugernavn og/eller adgangskode", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Log.e("LoginActivity", "Error response from server: ${response.code()} - ${response.message()}")
+                    //Log.e("LoginActivity", "Error response from server: ${response.code()} - ${response.message()}")
                     Toast.makeText(this@LoginActivity, "Forkert brugernavn og/eller adgangskode", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
                 loginProgress.visibility = View.GONE
-                Log.e("LoginActivity", "Network error: ${t.localizedMessage}", t)
+                //Log.e("LoginActivity", "Network error: ${t.localizedMessage}", t)
             }
         })
     }
