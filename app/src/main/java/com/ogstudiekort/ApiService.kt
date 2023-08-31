@@ -1,12 +1,16 @@
 package com.ogstudiekort
 
 import retrofit2.Call
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ApiService {
-    @GET("getinfo.asp?type=appauth")
-    fun authenticateUser(@Query("usr") username: String, @Query("pwd") password: String): Call<String>
+    @FormUrlEncoded
+    @POST("getinfo.asp?type=appauthnew")
+    fun authenticateUser(@Field("usr") username: String, @Field("pwd") password: String): Call<String>
 
     @GET("getinfo.asp?type=getsaldo")
     fun getSaldo(@Query("usr") username: String): Call<String>
